@@ -9,5 +9,6 @@ public class BlogApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BlogApiApplication.class, args);
 	}
+	//Test för att se om Github synkar, Daniel...
 
 }
