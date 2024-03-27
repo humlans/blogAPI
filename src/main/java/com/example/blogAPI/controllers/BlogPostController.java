@@ -17,6 +17,7 @@ public class BlogPostController {
         this.blogPostService = blogPostService;
     }
 
+    @CrossOrigin
     @GetMapping("")
     public ResponseEntity<BlogPost> getOneBlogPostById(int id) {
         BlogPost blogPost = blogPostService.getBlosPostById(id);
@@ -25,12 +26,13 @@ public class BlogPostController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-
+    
+    @CrossOrigin
     @GetMapping("/get-all-posts")
     public ArrayList<BlogPost> getAllBlogPosts() {
        return (ArrayList<BlogPost>) blogPostService.getAllPosts();
     }
-
+    @CrossOrigin
     @PostMapping("/create-post")
     public ResponseEntity<String> createNewBlogPost(String title, String textContent, String date, int userId) {
         BlogPost blogPost = new BlogPost(title, textContent, date, userId);
@@ -41,6 +43,7 @@ public class BlogPostController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add post");
     }
 
+    @CrossOrigin
     @PutMapping("/edit-post")
     public ResponseEntity<String> editBlogPost(int id, String title, String textContent, String date, int userId) {
         BlogPost blogPost = new BlogPost(id, title, textContent, date, userId);
@@ -51,6 +54,7 @@ public class BlogPostController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to edit post");
     }
 
+    @CrossOrigin
     @DeleteMapping("delete-post")
     public ResponseEntity<String> deleteBlogPostById(int id) {
         boolean success = blogPostService.deleteBlogPostById(id);
