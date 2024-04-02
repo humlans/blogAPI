@@ -43,16 +43,18 @@ public class BlogPostController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add post");
     }
 
+    //ÄNDRAT I EDIT POST
     @CrossOrigin
     @PutMapping("/edit-post")
-    public ResponseEntity<String> editBlogPost(int id, String title, String textContent, String date, int userId) {
-        BlogPost blogPost = new BlogPost(id, title, textContent, date, userId);
+    public ResponseEntity<String> editBlogPost(@RequestBody BlogPost blogPost) {
         boolean success = blogPostService.updateBlogPost(blogPost);
         if(success) {
             return ResponseEntity.status(HttpStatus.OK).body("Edited successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to edit post");
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to edit post");
     }
+
 
     @CrossOrigin
     @DeleteMapping("delete-post")
