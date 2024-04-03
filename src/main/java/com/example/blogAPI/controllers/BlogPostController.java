@@ -26,7 +26,7 @@ public class BlogPostController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-    
+
     @CrossOrigin
     @GetMapping("/get-all-posts")
     public ArrayList<BlogPost> getAllBlogPosts() {
@@ -46,7 +46,8 @@ public class BlogPostController {
     //ÄNDRAT I EDIT POST
     @CrossOrigin
     @PutMapping("/edit-post")
-    public ResponseEntity<String> editBlogPost(@RequestBody BlogPost blogPost) {
+    public ResponseEntity<String> editBlogPost(int id, String title, String textContent, String date, int userId) {
+        BlogPost blogPost = new BlogPost(id, title, textContent, date, userId);
         boolean success = blogPostService.updateBlogPost(blogPost);
         if(success) {
             return ResponseEntity.status(HttpStatus.OK).body("Edited successfully");
