@@ -16,4 +16,6 @@ public class User {
     private int id;
     @Column
     private String userName;
+    @Column
+    private String password;
 }
