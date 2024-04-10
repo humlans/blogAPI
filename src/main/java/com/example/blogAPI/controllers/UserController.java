@@ -1,5 +1,6 @@
 package com.example.blogAPI.controllers;
 
+import com.example.blogAPI.items.BlogPost;
 import com.example.blogAPI.items.User;
 import com.example.blogAPI.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,18 @@ public class UserController {
         if(user != null){
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(null);//ÄNDRA TILL NOT FOUND
     }
+
+    @CrossOrigin
+    @GetMapping("/byId")
+    public ResponseEntity<User> getUserById(int id){
+        User user = userService.getUserByUserId(id);
+        if(user != null){
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
+
+
 }

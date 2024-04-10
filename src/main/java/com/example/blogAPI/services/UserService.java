@@ -25,4 +25,12 @@ public class UserService {
         }
         return null;
     }
+
+
+    public User getUserByUserId(int id){
+        if(repo.existsById(id)){
+            return repo.findById(id).get();
+        }
+        return null;
+    }
 }
