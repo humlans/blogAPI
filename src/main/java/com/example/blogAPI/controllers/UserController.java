@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -31,7 +33,13 @@ public class UserController {
         if(user != null){
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(null);//ÄNDRA TILL NOT FOUND
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);//ÄNDRA TILL NOT FOUND
+    }
+
+    @CrossOrigin
+    @GetMapping("/get-all-users")
+    public ArrayList<User> getAllBlogPosts() {
+        return (ArrayList<User>) userService.getAllUsers();
     }
 
     @CrossOrigin

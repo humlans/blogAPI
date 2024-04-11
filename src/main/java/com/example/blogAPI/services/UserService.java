@@ -1,8 +1,11 @@
 package com.example.blogAPI.services;
 
+import com.example.blogAPI.items.BlogPost;
 import com.example.blogAPI.items.User;
 import com.example.blogAPI.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -32,5 +35,9 @@ public class UserService {
             return repo.findById(id).get();
         }
         return null;
+    }
+
+    public ArrayList<User> getAllUsers() {
+        return (ArrayList<User>) repo.findAll();
     }
 }

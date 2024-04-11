@@ -1,7 +1,9 @@
 package com.example.blogAPI.controllers;
 
 import com.example.blogAPI.items.BlogPost;
+import com.example.blogAPI.items.User;
 import com.example.blogAPI.services.BlogPostService;
+import com.example.blogAPI.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,10 @@ import java.util.ArrayList;
 @RequestMapping("/blog-post")
 public class BlogPostController {
     private BlogPostService blogPostService;
-    public BlogPostController(BlogPostService blogPostService) {
+    private UserService userService;
+    public BlogPostController(BlogPostService blogPostService, UserService userService) {
         this.blogPostService = blogPostService;
+        this.userService = userService;
     }
 
     @CrossOrigin
@@ -32,10 +36,16 @@ public class BlogPostController {
     public ArrayList<BlogPost> getAllBlogPosts() {
        return (ArrayList<BlogPost>) blogPostService.getAllPosts();
     }
+    @CrossOrigin("http://127.0.0.1:5500")
+    @GetMapping("/get-all-posts-userId")
+    public ArrayList<BlogPost> getAllBlogPostsSortedByUserId() {
+        return (ArrayList<BlogPost>) blogPostService.getAllBlogPostsSortedByUserId();
+    }
     @CrossOrigin
     @PostMapping("/create-post")
     public ResponseEntity<String> createNewBlogPost(String title, String textContent, String date, int userId) {
-        BlogPost blogPost = new BlogPost(title, textContent, date, userId);
+        User user = userService.getUserByUserId(userId);
+        BlogPost blogPost = new BlogPost(title, textContent, date, userId, user);
         boolean success = blogPostService.addBlogPost(blogPost);
         if(success) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Added successfully");
@@ -47,7 +57,8 @@ public class BlogPostController {
     @CrossOrigin
     @PutMapping("/edit-post")
     public ResponseEntity<String> editBlogPost(int id, String title, String textContent, String date, int userId) {
-        BlogPost blogPost = new BlogPost(id, title, textContent, date, userId);
+        User user = userService.getUserByUserId(userId);
+        BlogPost blogPost = new BlogPost(id, title, textContent, date, userId, user);
         boolean success = blogPostService.updateBlogPost(blogPost);
         if(success) {
             return ResponseEntity.status(HttpStatus.OK).body("Edited successfully");
