@@ -14,6 +14,8 @@ public class UserService {
         repo = userRepository;
     }
 
+    // Find User by username and check if the given password is equal
+    // to the password in the database.
     public boolean loginUser(String username, String password){
         User user = repo.findByUserName(username);
         if(user != null && user.getPassword().equals(password)) {
@@ -22,6 +24,7 @@ public class UserService {
         return false;
     }
 
+    // Get User by username from database.
     public User getUserByUsername(String username){
         if(repo.existsByUserName(username)){
             return repo.findByUserName(username);
@@ -29,7 +32,7 @@ public class UserService {
         return null;
     }
 
-
+    // Get User by id from database.
     public User getUserByUserId(int id){
         if(repo.existsById(id)){
             return repo.findById(id).get();
@@ -37,6 +40,7 @@ public class UserService {
         return null;
     }
 
+    // Get a list of all User from database.
     public ArrayList<User> getAllUsers() {
         return (ArrayList<User>) repo.findAll();
     }

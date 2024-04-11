@@ -12,26 +12,21 @@ import java.util.ArrayList;
 public class BlogPostService {
 
     private BlogPostRepository repo;
-    private UserRepository userRepo;
-    public BlogPostService(BlogPostRepository repo, UserRepository userRepository) {
+    public BlogPostService(BlogPostRepository repo) {
         this.repo = repo;
-        userRepo = userRepository;
     }
 
+    // Get all BlogPost to a list from database.
     public ArrayList<BlogPost> getAllPosts() {
         return (ArrayList<BlogPost>) repo.findAll();
     }
 
+    // Get all BlogPosts sorted by user id with bubble sort from database.
     public ArrayList<BlogPost> getAllBlogPostsSortedByUserId() {
         ArrayList<BlogPost> allPosts = (ArrayList<BlogPost>) repo.findAll();
         for (int i = 0; i < allPosts.size(); i++) {
-            // Last i elements are already in place
             for (var j = 0; j < (allPosts.size() - i - 1); j++) {
-                // Checking if the item at present iteration
-                // is greater than the next iteration
                 if (allPosts.get(j).getUserId() > allPosts.get(j + 1).getUserId()) {
-                    // If the condition is true
-                    // then swap them
                     BlogPost temp = allPosts.get(j);
                     allPosts.set(j, allPosts.get(j + 1));
                     allPosts.set(j + 1, temp);
@@ -40,19 +35,23 @@ public class BlogPostService {
         }
         return allPosts;
     }
-    public BlogPost getBlosPostById(int id) {
+
+    // Get BlogPost by id from database.
+    public BlogPost getBlogPostById(int id) {
         if(repo.existsById(id)) {
             return repo.findById(id).get();
         }
         return null;
     }
 
+    // Add BlogPost to database.
     public boolean addBlogPost(BlogPost blogPost) {
         BlogPost newBlogPost = repo.save(blogPost);
         blogPost.setId(newBlogPost.getId());
         return true;
     }
 
+    // Update BlogPost to database.
     public boolean updateBlogPost(BlogPost blogPost) {
         if(repo.existsById(blogPost.getId())){
             repo.save(blogPost);
@@ -61,6 +60,7 @@ public class BlogPostService {
         return false;
     }
 
+    // Delete BlogPost from database.
     public boolean deleteBlogPostById(int id) {
         if(repo.existsById(id)){
             repo.deleteById(id);
