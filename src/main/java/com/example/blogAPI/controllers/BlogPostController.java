@@ -5,11 +5,11 @@ import com.example.blogAPI.items.User;
 import com.example.blogAPI.services.BlogPostService;
 import com.example.blogAPI.services.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/blog-post")
@@ -38,8 +38,22 @@ public class BlogPostController {
     // Get mapping to get a list of BlogPost objects.
     @CrossOrigin
     @GetMapping("/get-all-posts")
-    public ArrayList<BlogPost> getAllBlogPosts() {
-       return (ArrayList<BlogPost>) blogPostService.getAllPosts();
+    public List<BlogPost> getAllBlogPosts() {
+       return blogPostService.getAllPosts();
+    }
+
+    // Get mapping to get a list of BlogPost objects by page.
+    @CrossOrigin
+    @GetMapping("/get-all-posts-by-page")
+    public List<BlogPost> getAllBlogPostsByPage(String sortBy, int page) {
+        return blogPostService.getAllPostsWithPage(sortBy, page);
+    }
+
+    // Get mapping to get the amount of posts in the database.
+    @CrossOrigin
+    @GetMapping("/get-number-of-posts")
+    public int getNUmberOfPosts() {
+        return blogPostService.getNumberOfPostsInDB();
     }
 
     // Get mapping to get a list of BlogPost objects sorted by userId.
