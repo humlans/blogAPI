@@ -44,13 +44,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
-    // Get mapping to get a list of all users.
-    @CrossOrigin
-    @GetMapping("/get-all-users")
-    public ArrayList<User> getAllBlogPosts() {
-        return (ArrayList<User>) userService.getAllUsers();
-    }
-
     // Get mapping to get a User object with id.
     @CrossOrigin
     @GetMapping("/byId")

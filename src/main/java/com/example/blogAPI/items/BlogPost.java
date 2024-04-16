@@ -17,23 +17,20 @@ public class BlogPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(columnDefinition="VARCHAR(100)")
     private String title;
-    @Column
+    @Column(columnDefinition="TEXT")
     private String textContent;
-    @Column
+    @Column(columnDefinition="DATE")
     private String date;
-    @Column
-    private int userId;
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User user;
 
-    public BlogPost (String title, String textContent, String date, int userId, User user) {
+    public BlogPost (String title, String textContent, String date, User user) {
         this.title = title;
         this.textContent = textContent;
         this.date = date;
-        this.userId = userId;
         this.user = user;
     }
 

@@ -39,9 +39,4 @@ public class UserService {
         }
         return null;
     }
-
-    // Get a list of all User from database.
-    public ArrayList<User> getAllUsers() {
-        return (ArrayList<User>) repo.findAll();
-    }
 }

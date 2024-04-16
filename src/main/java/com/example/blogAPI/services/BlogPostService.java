@@ -53,21 +53,6 @@ public class BlogPostService {
         return blogposts;
     }
 
-    // Get all BlogPosts sorted by user id with bubble sort from database.
-    public ArrayList<BlogPost> getAllBlogPostsSortedByUserId() {
-        ArrayList<BlogPost> allPosts = (ArrayList<BlogPost>) repo.findAll();
-        for (int i = 0; i < allPosts.size(); i++) {
-            for (var j = 0; j < (allPosts.size() - i - 1); j++) {
-                if (allPosts.get(j).getUserId() > allPosts.get(j + 1).getUserId()) {
-                    BlogPost temp = allPosts.get(j);
-                    allPosts.set(j, allPosts.get(j + 1));
-                    allPosts.set(j + 1, temp);
-                }
-            }
-        }
-        return allPosts;
-    }
-
     // Get BlogPost by id from database.
     public BlogPost getBlogPostById(int id) {
         if(repo.existsById(id)) {

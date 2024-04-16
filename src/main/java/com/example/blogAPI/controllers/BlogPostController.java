@@ -56,13 +56,6 @@ public class BlogPostController {
         return blogPostService.getNumberOfPostsInDB();
     }
 
-    // Get mapping to get a list of BlogPost objects sorted by userId.
-    @CrossOrigin("http://127.0.0.1:5500")
-    @GetMapping("/get-all-posts-userId")
-    public ArrayList<BlogPost> getAllBlogPostsSortedByUserId() {
-        return (ArrayList<BlogPost>) blogPostService.getAllBlogPostsSortedByUserId();
-    }
-
     // Post mapping to create a new BlogPost object.
     @CrossOrigin
     @PostMapping("/create-post")
@@ -71,7 +64,7 @@ public class BlogPostController {
         User user = userService.getUserByUserId(userId);
         if(user != null) {
             // Create a BlogPost object with given values.
-            BlogPost blogPost = new BlogPost(title, textContent, date, userId, user);
+            BlogPost blogPost = new BlogPost(title, textContent, date, user);
             // Check if addBlogPost successes or not.
             boolean success = blogPostService.addBlogPost(blogPost);
             if(success) {
@@ -93,7 +86,7 @@ public class BlogPostController {
         User user = userService.getUserByUserId(userId);
         if(user != null) {
             // Create a BlogPost object with given values.
-            BlogPost blogPost = new BlogPost(id, title, textContent, date, userId, user);
+            BlogPost blogPost = new BlogPost(id, title, textContent, date, user);
             // Check if updateBlogPost successes or not.
             boolean success = blogPostService.updateBlogPost(blogPost);
             if(success) {
@@ -111,7 +104,7 @@ public class BlogPostController {
 
     // Delete mapping to remove a BlogPost object.
     @CrossOrigin
-    @DeleteMapping("delete-post")
+    @DeleteMapping("/delete-post")
     public ResponseEntity<String> deleteBlogPostById(int id) {
         // Check if deleteBlogPostById successes or not.
         boolean success = blogPostService.deleteBlogPostById(id);

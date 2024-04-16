@@ -18,16 +18,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    @Column(columnDefinition="VARCHAR(100)")
     private String userName;
-    @Column
+    @Column(columnDefinition="VARCHAR(100)")
     private String password;
-    //@OneToMany(targetEntity = BlogPost.class, cascade = CascadeType.ALL, mappedBy = "user")
-    //@JoinColumn(name = "id_of_user", referencedColumnName = "id")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<BlogPost> posts;
 
-    public void addPost(BlogPost blogPost){
-        posts.add(blogPost);
-    }
 }
